@@ -1,4 +1,4 @@
-# Gerenciador de Registros 🗂️
+# Gerenciador de Registros
 
 ![PHP](https://img.shields.io/badge/PHP-8.1+-blue)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0+-orange)
@@ -10,21 +10,21 @@ Sistema web completo para cadastro, visualização, edição, exclusão e gerenc
 
 
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
-- ✅ Cadastro de registros com título, conteúdo e status
-- ✅ Visualização detalhada via modal
-- ✅ Edição rápida com AJAX
-- ✅ Exclusão com confirmação
-- ✅ Paginação tradicional com números de página
-- ✅ Filtros por palavra-chave e data
-- ✅ Exportação em CSV
-- ✅ Feedback visual com animações e expiração automática
-- ✅ Interface responsiva com Bootstrap 5
+- Cadastro de registros com título, conteúdo e status
+- Visualização detalhada via modal
+- Edição rápida com AJAX
+- Exclusão com confirmação
+- Paginação tradicional com números de página
+- Filtros por palavra-chave e data
+- Exportação em CSV
+- Feedback visual com animações e expiração automática
+- Interface responsiva com Bootstrap 5
 
 ---
 
-## 🧰 Requisitos
+## Requisitos
 
 - PHP 8.1 ou superior  
 - MySQL 8.0 ou superior  
@@ -33,7 +33,7 @@ Sistema web completo para cadastro, visualização, edição, exclusão e gerenc
 
 ---
 
-## 📦 Instalação
+## Instalação
 
 1. Clone o repositório:
    ```bash
@@ -55,7 +55,7 @@ Sistema web completo para cadastro, visualização, edição, exclusão e gerenc
 
 ---
 
-## 🗂️ Estrutura de Diretórios
+## Estrutura de Diretórios
 
 ```
 gerenciador-registros/
@@ -84,7 +84,7 @@ gerenciador-registros/
 
 ---
 
-## 🛡️ Segurança
+## Segurança
 
 - Prepared statements com PDO
 - Validação de entrada no backend
@@ -93,7 +93,7 @@ gerenciador-registros/
 
 ---
 
-## 📈 Escalabilidade
+## Escalabilidade
 
 - Paginação eficiente para grandes volumes
 - Suporte a `LONGTEXT` para conteúdos extensos
@@ -101,17 +101,13 @@ gerenciador-registros/
 
 ---
 
-## 📤 Exportação
+## Exportação
 
 - Registros podem ser exportados em CSV com um clique
 - Compatível com Excel, LibreOffice e Google Sheets
 
----
-Claro, Fabio! Aqui está o trecho atualizado do seu **README técnico**, agora com a seção de **estrutura SQL** incluída para facilitar a instalação e entendimento do banco de dados. Essa adição é útil tanto para desenvolvedores quanto para administradores que queiram replicar ou migrar o sistema.
 
----
-
-## 🗃️ Estrutura do Banco de Dados (SQL)
+## Estrutura do Banco de Dados (SQL)
 
 ```sql
 CREATE TABLE registros (
@@ -125,7 +121,7 @@ CREATE TABLE registros (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 ```
 
-### 🔹 Explicação dos campos:
+### Explicação dos campos:
 
 | Campo         | Tipo         | Descrição                                 |
 |---------------|--------------|-------------------------------------------|
@@ -136,7 +132,5 @@ CREATE TABLE registros (
 | `criado_em`   | TIMESTAMP    | Data de criação automática                |
 | `atualizado_em` | TIMESTAMP  | Atualizado automaticamente em alterações  |
 
-> 💡 O tipo `LONGTEXT` permite armazenar até 4GB de conteúdo, ideal para registros extensos.
-
-> Desenvolvido com ❤️ por DevBadMood
+> O tipo `LONGTEXT` permite armazenar até 4GB de conteúdo, ideal para registros extensos.
 
