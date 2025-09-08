@@ -10,15 +10,6 @@
 </head>
 <body>
 
-<div class="container mt-3">
-  <div id="mensagem_sistema"></div>
-
-  <!-- Spinner de carregamento -->
-  <div id="spinner" style="display:none;" aria-label="Carregando...">
-    <div class="text-center"><div class="spinner-border text-primary"></div></div>
-  </div>
-</div>
-
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
   <div class="container-fluid">
@@ -28,6 +19,19 @@
     </div>
   </div>
 </nav>
+
+
+
+<div class="container mt-3">
+  <div id="mensagem_sistema"></div>
+
+  <!-- Spinner de carregamento -->
+  <div id="spinner" style="display:none;" aria-label="Carregando...">
+    <div class="text-center"><div class="spinner-border text-primary"></div></div>
+  </div>
+</div>
+
+
 
 <!-- Conteúdo principal -->
 <div class="container-fluid mt-5">

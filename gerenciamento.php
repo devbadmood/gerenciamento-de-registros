@@ -6,17 +6,25 @@
   <title>Gerenciamento de Registros</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
 
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 h1">Gerenciador de Registros</span>
+    <div class="d-flex ms-auto">
+      <a href="index.php" class="btn btn-outline-secondary" aria-label="Ir para home">Registrar</a>
+    </div>
+  </div>
+</nav>
+
 <div class="container mt-4">
   <h3 class="mb-4">Gerenciar Registros</h3>
 
-  <!-- Mensagens do sistema -->
   <div id="mensagem_sistema"></div>
-
-  <!-- Spinner de carregamento -->
   <div id="spinner" style="display:none;" aria-label="Carregando...">
     <div class="text-center"><div class="spinner-border text-primary"></div></div>
   </div>
@@ -30,14 +38,15 @@
       <input type="date" id="filtro_data" class="form-control" aria-label="Filtrar por data">
     </div>
     <div class="col-md-2">
-      <button id="btn_filtrar" class="btn btn-outline-primary w-100" aria-label="Aplicar filtros">Filtrar</button>
+      <button id="btn_filtrar" class="btn btn-outline-primary w-100">Filtrar</button>
     </div>
-    <div class="col-md-3">
-      <a href="exportar_csv.php" class="btn btn-outline-success w-100" aria-label="Exportar registros em CSV">Exportar CSV</a>
+    <div class="col-md-3 d-flex gap-2">
+      <button id="btn_limpar" class="btn btn-outline-secondary w-50">Limpar</button>
+      <a href="exportar_csv.php" class="btn btn-outline-success w-50">Exportar CSV</a>
     </div>
   </div>
 
-  <!-- Tabela de registros -->
+  <!-- Tabela -->
   <table class="table table-bordered table-hover align-middle">
     <thead class="table-light">
       <tr>
@@ -63,7 +72,7 @@
     <form id="form_editar" class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="modal_editar_label">Editar Registro</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <input type="hidden" name="id" id="editar_id">
@@ -90,7 +99,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="modal_visualizar_label">Visualizar Registro</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <p><strong>Título:</strong> <span id="visualizar_titulo"></span></p>

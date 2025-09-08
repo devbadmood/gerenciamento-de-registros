@@ -49,18 +49,27 @@ function carregarPagina(page = 1, palavra = '', data = '') {
     });
 
     // Visualizar registro
-    $('.visualizar').off('click').on('click', function () {
-      $('#visualizar_titulo').text($(this).data('titulo'));
-      $('#visualizar_conteudo').html($(this).data('conteudo').replace(/\n/g, '<br>'));
-      $('#visualizar_status')
-        .text($(this).data('status'))
-        .removeClass('text-success text-danger')
-        .addClass($(this).data('status') === 'Ativo' ? 'text-success' : 'text-danger');
-      $('#visualizar_data').text($(this).data('data'));
+$('.visualizar').off('click').on('click', function () {
+  console.log('Título:', $(this).data('titulo')); // Verifique se aparece corretamente
 
-      const modal = new bootstrap.Modal(document.getElementById('modal_visualizar'));
-      modal.show();
-    });
+  const titulo = $(this).data('titulo');
+  const conteudo = $(this).data('conteudo');
+  const texto = typeof conteudo === 'string' ? conteudo : String(conteudo);
+
+  $('#visualizar_titulo').text(typeof titulo === 'string' ? titulo : String(titulo));
+  $('#visualizar_conteudo').html(texto.replace(/\n/g, '<br>'));
+  $('#visualizar_status')
+    .text($(this).data('status'))
+    .removeClass('text-success text-danger')
+    .addClass($(this).data('status') === 'Ativo' ? 'text-success' : 'text-danger');
+  $('#visualizar_data').text($(this).data('data'));
+
+  const modal = new bootstrap.Modal(document.getElementById('modal_visualizar'));
+  modal.show();
+});
+
+
+
   }, 'json').fail(function () {
     esconderSpinner();
     exibirMensagem('error', 'Falha na comunicação com o servidor.');
@@ -80,16 +89,14 @@ function gerarPaginacao(totalPages, currentPage, palavra, data) {
     startPage = Math.max(1, endPage - maxVisible + 1);
   }
 
-  // Botão "Anterior"
   if (currentPage > 1) {
     $paginacao.append(`
       <li class="page-item">
-        <a href="#" class="page-link" data-page="${currentPage - 1}" aria-label="Página anterior">&laquo;</a>
+        <a href="#" class="page-link" data-page="${currentPage - 1}" aria-label="Anterior">&laquo;</a>
       </li>
     `);
   }
 
-  // Page items limitados
   for (let i = startPage; i <= endPage; i++) {
     const active = i === currentPage ? 'active' : '';
     const item = $(`
@@ -104,11 +111,10 @@ function gerarPaginacao(totalPages, currentPage, palavra, data) {
     $paginacao.append(item);
   }
 
-  // Botão "Próxima"
-  if (currentPage < totalPages) {
+   if (currentPage < totalPages) {
     $paginacao.append(`
       <li class="page-item">
-        <a href="#" class="page-link" data-page="${currentPage + 1}" aria-label="Próxima página">&raquo;</a>
+        <a href="#" class="page-link" data-page="${currentPage + 1}" aria-label="Próxima">&raquo;</a>
       </li>
     `);
   }
@@ -121,6 +127,23 @@ $(document).ready(function () {
     const palavra = $('#filtro_palavra').val();
     const data = $('#filtro_data').val();
     carregarPagina(1, palavra, data);
+  });
+
+  $('#btn_limpar').on('click', function () {
+    $('#filtro_palavra').val('');
+    $('#filtro_data').val('');
+    carregarPagina(1);
+  });
+
+  $('#filtro_palavra').on('keypress', function (e) {
+    if (e.which === 13) {
+      e.preventDefault();
+      $('#btn_filtrar').click();
+    }
+  });
+
+  $('#filtro_data').on('change', function () {
+    $('#btn_filtrar').click();
   });
 
   $('#form_editar').on('submit', function (e) {
