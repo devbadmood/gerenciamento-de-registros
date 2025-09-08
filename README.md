@@ -107,8 +107,36 @@ gerenciador-registros/
 - Compatível com Excel, LibreOffice e Google Sheets
 
 ---
+Claro, Fabio! Aqui está o trecho atualizado do seu **README técnico**, agora com a seção de **estrutura SQL** incluída para facilitar a instalação e entendimento do banco de dados. Essa adição é útil tanto para desenvolvedores quanto para administradores que queiram replicar ou migrar o sistema.
 
+---
 
+## 🗃️ Estrutura do Banco de Dados (SQL)
+
+```sql
+CREATE TABLE registros (
+  id INT NOT NULL AUTO_INCREMENT,
+  titulo VARCHAR(255) NOT NULL,
+  conteudo LONGTEXT NOT NULL,
+  status ENUM('Ativo','Inativo') DEFAULT 'Ativo',
+  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
+
+### 🔹 Explicação dos campos:
+
+| Campo         | Tipo         | Descrição                                 |
+|---------------|--------------|-------------------------------------------|
+| `id`          | INT          | Identificador único do registro           |
+| `titulo`      | VARCHAR(255) | Título do registro                        |
+| `conteudo`    | LONGTEXT     | Conteúdo detalhado (suporte a textos longos) |
+| `status`      | ENUM         | Estado do registro: `Ativo` ou `Inativo`  |
+| `criado_em`   | TIMESTAMP    | Data de criação automática                |
+| `atualizado_em` | TIMESTAMP  | Atualizado automaticamente em alterações  |
+
+> 💡 O tipo `LONGTEXT` permite armazenar até 4GB de conteúdo, ideal para registros extensos.
 
 > Desenvolvido com ❤️ por DevBadMood
 
