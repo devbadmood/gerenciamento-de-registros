@@ -37,7 +37,7 @@ Sistema web completo para cadastro, visualização, edição, exclusão e gerenc
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seuusuario/gerenciador-registros.git
+   git clone https://github.com/devbadmood/gerenciamento-de-registros.git
    ```
 
 2. Importe o banco de dados:
