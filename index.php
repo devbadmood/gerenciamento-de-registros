@@ -29,7 +29,6 @@
   </div>
 </nav>
 
-
 <!-- Conteúdo principal -->
 <div class="container-fluid mt-5">
   <div class="row">
@@ -61,6 +60,9 @@
     <div class="col-md-4">
       <h4>Registros Ativos</h4>
       <div id="area_ativos"></div>
+      <nav class="mt-3">
+        <ul id="paginacao_ativos" class="pagination justify-content-center"></ul>
+      </nav>
     </div>
   </div>
 </div>
@@ -68,13 +70,10 @@
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-<script src="assets/js/spinner.js"></script>       <!-- define mostrarSpinner e esconderSpinner -->
-<script src="assets/js/ativos.js"></script>        <!-- define carregarAtivos -->
-<script src="assets/js/mensagens.js"></script>     <!-- define exibirMensagem -->
-<script src="assets/js/cadastro.js"></script>      <!-- depende das funções acima -->
-
-
+<script src="assets/js/spinner.js"></script>
+<script src="assets/js/mensagens.js"></script>
+<script src="assets/js/ativos.js"></script>
+<script src="assets/js/cadastro.js"></script>
 
 </body>
 </html>

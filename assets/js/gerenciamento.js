@@ -12,7 +12,7 @@ function carregarPagina(page = 1, palavra = '', data = '') {
     $('table tbody').html(res.html);
     gerarPaginacao(res.total_pages, page, palavra, data);
 
-    // Eventos: status
+    // Atualizar status
     $('.status_toggle').off('change').on('change', function () {
       const id = $(this).data('id');
       const novoStatus = $(this).prop('checked') ? 'Ativo' : 'Inativo';
@@ -27,7 +27,7 @@ function carregarPagina(page = 1, palavra = '', data = '') {
       }, 'json');
     });
 
-    // Eventos: excluir
+    // Excluir registro
     $('.delete').off('click').on('click', function () {
       const id = $(this).data('id');
       if (confirm('Deseja excluir este registro?')) {
@@ -38,7 +38,7 @@ function carregarPagina(page = 1, palavra = '', data = '') {
       }
     });
 
-    // Eventos: editar
+    // Editar registro
     $('.editar').off('click').on('click', function () {
       $('#editar_id').val($(this).data('id'));
       $('#editar_titulo').val($(this).data('titulo'));
@@ -48,7 +48,7 @@ function carregarPagina(page = 1, palavra = '', data = '') {
       modal.show();
     });
 
-    // Eventos: visualizar
+    // Visualizar registro
     $('.visualizar').off('click').on('click', function () {
       $('#visualizar_titulo').text($(this).data('titulo'));
       $('#visualizar_conteudo').html($(this).data('conteudo').replace(/\n/g, '<br>'));
@@ -71,7 +71,26 @@ function gerarPaginacao(totalPages, currentPage, palavra, data) {
   const $paginacao = $('#paginacao');
   $paginacao.empty();
 
-  for (let i = 1; i <= totalPages; i++) {
+  const maxVisible = 5;
+  let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+  let endPage = startPage + maxVisible - 1;
+
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(1, endPage - maxVisible + 1);
+  }
+
+  // Botão "Anterior"
+  if (currentPage > 1) {
+    $paginacao.append(`
+      <li class="page-item">
+        <a href="#" class="page-link" data-page="${currentPage - 1}" aria-label="Página anterior">&laquo;</a>
+      </li>
+    `);
+  }
+
+  // Page items limitados
+  for (let i = startPage; i <= endPage; i++) {
     const active = i === currentPage ? 'active' : '';
     const item = $(`
       <li class="page-item ${active}">
@@ -80,9 +99,18 @@ function gerarPaginacao(totalPages, currentPage, palavra, data) {
     `);
     item.on('click', function (e) {
       e.preventDefault();
-      carregarPagina($(this).find('.page-link').data('page'), palavra, data);
+      carregarPagina(i, palavra, data);
     });
     $paginacao.append(item);
+  }
+
+  // Botão "Próxima"
+  if (currentPage < totalPages) {
+    $paginacao.append(`
+      <li class="page-item">
+        <a href="#" class="page-link" data-page="${currentPage + 1}" aria-label="Próxima página">&raquo;</a>
+      </li>
+    `);
   }
 }
 
