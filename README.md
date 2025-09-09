@@ -1,3 +1,4 @@
+
 # Gerenciador de Registros
 
 ![PHP](https://img.shields.io/badge/PHP-8.1+-blue)
@@ -6,19 +7,21 @@
 ![jQuery](https://img.shields.io/badge/jQuery-3.7-lightgrey)
 ![Status](https://img.shields.io/badge/Projeto-Estável-brightgreen)
 
-Sistema web completo para cadastro, visualização, edição, exclusão e gerenciamento de registros com suporte a filtros, paginação, exportação e feedback visual dinâmico.
+Sistema web completo para cadastro, visualização, edição, exclusão e gerenciamento de registros com suporte a conteúdo rico, filtros, histórico de edições, exportação e gráficos analíticos.
 
-
+---
 
 ## Funcionalidades
 
 - Cadastro de registros com título, conteúdo e status
-- Visualização detalhada via modal
-- Edição rápida com AJAX
+- Editor Trumbowyg com suporte a imagens e HTML
+- Visualização detalhada via modal fullscreen
+- Edição com rastreabilidade (salva histórico de alterações)
 - Exclusão com confirmação
-- Paginação tradicional com números de página
+- Paginação dinâmica via AJAX
 - Filtros por palavra-chave e data
-- Exportação em CSV
+- Exportação em CSV e PDF
+- Painel com gráficos analíticos (Chart.js)
 - Feedback visual com animações e expiração automática
 - Interface responsiva com Bootstrap 5
 
@@ -61,13 +64,15 @@ Sistema web completo para cadastro, visualização, edição, exclusão e gerenc
 gerenciador-registros/
 ├── index.php
 ├── gerenciamento.php
-├── cadastrar.php
 ├── editar.php
-├── update_status.php
 ├── delete.php
+├── update_status.php
 ├── fetch_all.php
 ├── fetch_ativos.php
 ├── exportar_csv.php
+├── exportar_pdf.php
+├── painel.php
+├── historico_ajax.php
 ├── db.php
 ├── helpers.php
 ├── assets/
@@ -90,6 +95,7 @@ gerenciador-registros/
 - Validação de entrada no backend
 - Escapamento de saída com `htmlspecialchars`
 - Proteção contra duplicidade de título
+- Sanitização leve de conteúdo HTML
 
 ---
 
@@ -98,16 +104,37 @@ gerenciador-registros/
 - Paginação eficiente para grandes volumes
 - Suporte a `LONGTEXT` para conteúdos extensos
 - Modularização de scripts para manutenção futura
+- Histórico de edições com rastreabilidade por registro
 
 ---
 
 ## Exportação
 
-- Registros podem ser exportados em CSV com um clique
-- Compatível com Excel, LibreOffice e Google Sheets
+- Registros podem ser exportados em:
+  - CSV (compatível com Excel, LibreOffice, Google Sheets)
+  - PDF (gerado com Dompdf)
 
+---
 
-## Estrutura do Banco de Dados (SQL)
+## Painel Analítico
+
+- Gráficos dinâmicos com [Chart.js](https://www.chartjs.org/)
+- Visualização de registros por dia
+- Pronto para expansão com filtros e comparativos
+
+---
+
+## Histórico de Edições
+
+- Cada alteração em um registro é salva automaticamente
+- Visualização via modal dinâmico com AJAX
+- Exibe título anterior, conteúdo anterior e data da edição
+
+---
+
+## Estrutura do Banco de Dados
+
+### Tabela `registros`
 
 ```sql
 CREATE TABLE registros (
@@ -118,19 +145,28 @@ CREATE TABLE registros (
   criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
-### Explicação dos campos:
+### Tabela `historico_edicoes`
 
-| Campo         | Tipo         | Descrição                                 |
-|---------------|--------------|-------------------------------------------|
-| `id`          | INT          | Identificador único do registro           |
-| `titulo`      | VARCHAR(255) | Título do registro                        |
-| `conteudo`    | LONGTEXT     | Conteúdo detalhado (suporte a textos longos) |
-| `status`      | ENUM         | Estado do registro: `Ativo` ou `Inativo`  |
-| `criado_em`   | TIMESTAMP    | Data de criação automática                |
-| `atualizado_em` | TIMESTAMP  | Atualizado automaticamente em alterações  |
+```sql
+CREATE TABLE historico_edicoes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  registro_id INT NOT NULL,
+  titulo_anterior TEXT,
+  conteudo_anterior LONGTEXT,
+  editado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (registro_id) REFERENCES registros(id)
+);
+```
 
-> O tipo `LONGTEXT` permite armazenar até 4GB de conteúdo, ideal para registros extensos.
+---
+
+## Próximos passos sugeridos
+
+- Autenticação de usuários e controle de permissões
+- Exportação do histórico em PDF
+- Comparação visual entre versões editadas
+- Notificações automáticas por e-mail
 
