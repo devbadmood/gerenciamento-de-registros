@@ -1,6 +1,11 @@
 <?php
 require 'db.php';
 
+// Função de sanitização leve para permitir apenas tags seguras
+function limparConteudo($html) {
+    return strip_tags($html, '<p><br><strong><em><ul><ol><li><a><img><h1><h2><h3><blockquote>');
+}
+
 $limit = 3;
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 $start = ($page - 1) * $limit;
@@ -28,23 +33,25 @@ try {
     $registros = $stmt->fetchAll();
 } catch (PDOException $e) {
     echo json_encode([
-        'html' => '<div class="alert alert-danger">Erro ao buscar registros: ' . $e->getMessage() . '</div>',
+        'html' => '<div class="alert alert-danger rounded-0">Erro ao buscar registros: ' . $e->getMessage() . '</div>',
         'total_pages' => 0
     ]);
     exit;
 }
 
 // Montagem do HTML
-$html = '<ul class="list-group mb-4">';
+$html = '<ul class="list-group mb-4 rounded-0 shadow-sm">';
 if (count($registros) === 0) {
     $html .= '<li class="list-group-item text-muted text-center">
                 <i class="bi bi-info-circle"></i> Nenhum registro ativo encontrado.
               </li>';
 } else {
     foreach ($registros as $row) {
+        $conteudoSeguro = limparConteudo($row["conteudo"]);
+
         $html .= '<li class="list-group-item">
                     <strong>' . htmlspecialchars($row["titulo"]) . '</strong><br>
-                    <small>' . nl2br(htmlspecialchars($row["conteudo"])) . '</small>
+         
                   </li>';
     }
 }
