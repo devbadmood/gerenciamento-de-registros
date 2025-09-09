@@ -1,10 +1,10 @@
-
 # Gerenciador de Registros
 
 ![PHP](https://img.shields.io/badge/PHP-8.1+-blue)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0+-orange)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple)
 ![jQuery](https://img.shields.io/badge/jQuery-3.7-lightgrey)
+![Trumbowyg](https://img.shields.io/badge/Editor-Trumbowyg-blueviolet)
 ![Status](https://img.shields.io/badge/Projeto-Estável-brightgreen)
 
 Sistema web completo para cadastro, visualização, edição, exclusão e gerenciamento de registros com suporte a conteúdo rico, filtros, histórico de edições, exportação e gráficos analíticos.
@@ -14,7 +14,7 @@ Sistema web completo para cadastro, visualização, edição, exclusão e gerenc
 ## Funcionalidades
 
 - Cadastro de registros com título, conteúdo e status
-- Editor Trumbowyg com suporte a imagens e HTML
+- **Editor Trumbowyg** com suporte a imagens, HTML e formatação avançada
 - Visualização detalhada via modal fullscreen
 - Edição com rastreabilidade (salva histórico de alterações)
 - Exclusão com confirmação
@@ -89,6 +89,18 @@ gerenciador-registros/
 
 ---
 
+## Editor Trumbowyg
+
+O sistema utiliza o [Trumbowyg](https://alex-d.github.io/Trumbowyg/) como editor de texto para os campos de conteúdo, oferecendo:
+
+- Formatação rica (negrito, itálico, listas, cabeçalhos)
+- Inserção de imagens com upload direto
+- Visualização em HTML
+- Plugins adicionais como `resizimg` e `upload`
+- Interface leve e responsiva
+
+---
+
 ## Segurança
 
 - Prepared statements com PDO
@@ -112,7 +124,6 @@ gerenciador-registros/
 
 - Registros podem ser exportados em:
   - CSV (compatível com Excel, LibreOffice, Google Sheets)
-  - PDF (gerado com Dompdf)
 
 ---
 
@@ -121,14 +132,6 @@ gerenciador-registros/
 - Gráficos dinâmicos com [Chart.js](https://www.chartjs.org/)
 - Visualização de registros por dia
 - Pronto para expansão com filtros e comparativos
-
----
-
-## Histórico de Edições
-
-- Cada alteração em um registro é salva automaticamente
-- Visualização via modal dinâmico com AJAX
-- Exibe título anterior, conteúdo anterior e data da edição
 
 ---
 
@@ -163,10 +166,11 @@ CREATE TABLE historico_edicoes (
 
 ---
 
-## Próximos passos sugeridos
+## Próximos passos
 
 - Autenticação de usuários e controle de permissões
 - Exportação do histórico em PDF
 - Comparação visual entre versões editadas
 - Notificações automáticas por e-mail
 
+---
