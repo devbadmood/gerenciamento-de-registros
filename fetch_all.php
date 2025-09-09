@@ -63,7 +63,6 @@ try {
             $checked = ($row["status"] === "Ativo") ? "checked" : "";
             $statusClass = ($row["status"] === "Ativo") ? "text-success" : "text-danger";
 
-            // Atenção: conteúdo sem htmlspecialchars — preserve HTML e código
             $html .= '<tr>
                 <td>' . htmlspecialchars($row["id"]) . '</td>
                 <td>' . htmlspecialchars($row["titulo"], ENT_QUOTES) . '</td>
@@ -93,6 +92,9 @@ try {
 
                         <button class="btn btn-outline-danger delete"
                             data-id="' . $row["id"] . '">Excluir</button>
+
+                        <button class="btn btn-outline-secondary historico"
+                            data-id="' . $row["id"] . '">Histórico</button>
                     </div>
                 </td>
             </tr>';

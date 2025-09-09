@@ -29,14 +29,25 @@ if ($id_edicao > 0) {
 </head>
 <body class="bg-body-secondary">
 
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
   <div class="container-fluid">
     <span class="navbar-brand mb-0 h1">Gerenciador de Registros</span>
-    <div class="d-flex ms-auto">
+    <div class="d-flex ms-auto gap-2">
       <a href="index.php" class="btn btn-outline-secondary btn-sm rounded-0">Registrar</a>
+      <a href="historico.php" class="btn btn-outline-info btn-sm rounded-0" aria-label="Visualizar histórico de edições">
+        <i class="bi bi-clock-history"></i> Histórico
+      </a>
+
+      <a href="painel.php" class="btn btn-outline-success btn-sm rounded-0" aria-label="Ver gráficos analíticos">
+        <i class="bi bi-bar-chart-line"></i> Gráficos
+      </a>
     </div>
   </div>
 </nav>
+
+
+
 
 <div class="container mt-2">
   <h5 class="mb-2">Registros</h5>
@@ -121,6 +132,21 @@ if ($id_edicao > 0) {
   </div>
 </div>
 
+<!-- Modal de histórico -->
+<div class="modal fade" id="modal_historico" tabindex="-1" aria-labelledby="modal_historico_label" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal_historico_label">Histórico de Edições</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="historico_conteudo">
+        <div class="text-center text-muted">Carregando histórico...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -129,68 +155,65 @@ if ($id_edicao > 0) {
 <script src="dist/plugins/upload/trumbowyg.upload.min.js"></script>
 <script src="//rawcdn.githack.com/RickStrahl/jquery-resizable/0.35/dist/jquery-resizable.min.js"></script>
 <script src="dist/plugins/resizimg/trumbowyg.resizimg.min.js"></script>
-
 <script src="assets/js/spinner.js"></script>
 <script src="assets/js/mensagens.js"></script>
 <script src="assets/js/gerenciamento.js"></script>
 <script src="assets/js/filtros.js"></script>
 
 <script>
-  // Inicializa Trumbowyg dinamicamente ao abrir o modal
   document.addEventListener('shown.bs.modal', function (event) {
     const modal = event.target;
     if (modal.id === 'modal_editar') {
       const $editor = $('#editar_conteudo');
-
       if ($editor.hasClass('trumbowyg-editor')) {
         $editor.trumbowyg('destroy');
       }
-
       $editor.trumbowyg({
         lang: 'pt_br',
         autogrow: true,
         btns: [
-          ['viewHTML'],
-          ['undo', 'redo'],
-          ['formatting'],
-          ['strong', 'em', 'del'],
-          ['superscript', 'subscript'],
-          ['link'],
-          ['insertImage'],
-          ['upload'],
+          ['viewHTML'], ['undo', 'redo'], ['formatting'],
+          ['strong', 'em', 'del'], ['superscript', 'subscript'],
+          ['link'], ['insertImage'], ['upload'],
           ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
-          ['unorderedList', 'orderedList'],
-          ['horizontalRule'],
-          ['removeformat'],
-          ['fullscreen']
+          ['unorderedList', 'orderedList'], ['horizontalRule'],
+          ['removeformat'], ['fullscreen']
         ],
         plugins: {
           upload: {
             serverPath: './upload.php',
             fileFieldName: 'image',
-            headers: {
-              'Authorization': 'Client-ID xxxxxxxxxxxx'
-            },
+            headers: { 'Authorization': 'Client-ID xxxxxxxxxxxx' },
             urlPropertyName: 'file'
           },
-          resizimg: {
-            minSize: 64,
-            step: 16
-          }
+          resizimg: { minSize: 64, step: 16 }
         }
       });
     }
   });
 
-  // Abre o modal automaticamente se editar_id estiver na URL
   $(document).ready(function () {
     const params = new URLSearchParams(window.location.search);
-    if (params.has('editar_id')) {
+   
+        if (params.has('editar_id')) {
       const modal = new bootstrap.Modal(document.getElementById('modal_editar'));
       modal.show();
     }
+
+    // Escuta o clique no botão "Histórico"
+    $(document).on('click', '.historico', function () {
+      const id = $(this).data('id');
+      $('#historico_conteudo').html('<div class="text-center text-muted">Carregando histórico...</div>');
+
+      $.get('historico_ajax.php', { id }, function (html) {
+        $('#historico_conteudo').html(html);
+        const modal = new bootstrap.Modal(document.getElementById('modal_historico'));
+        modal.show();
+      }).fail(function () {
+        $('#historico_conteudo').html('<div class="alert alert-danger">Erro ao carregar histórico.</div>');
+      });
+    });
   });
 </script>
-
 </body>
 </html>
